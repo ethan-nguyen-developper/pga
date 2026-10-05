@@ -25,7 +25,7 @@
             <!--begin::Card-->
             <div class="card">
               <div class="card-header">
-                <h1>mon contenu</h1>
+                <h1>mon contenu 2</h1>
               </div>
               <!-- /.card-header -->
               <div class="card-body">Start creating your amazing application!</div>
