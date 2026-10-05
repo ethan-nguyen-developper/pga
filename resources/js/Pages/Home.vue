@@ -7,7 +7,7 @@
         <!--begin::Row-->
         <div class="row">
           <div class="col-sm-6">
-            <h1 class="mb-0 fs-3">Page de test 2</h1>
+            <h1 class="mb-0 fs-3">Ma page Home</h1>
           </div>
         </div>
         <!--end::Row-->
@@ -22,7 +22,7 @@
         <!--begin::Row-->
         <div class="row">
           <div class="col-12">
-            <h1>Mon contenu 2</h1>
+            <h1>Accueil</h1>
           </div>
           <!-- /.col -->
         </div>

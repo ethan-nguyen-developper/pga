@@ -11,6 +11,7 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 import MainLayout from './Layouts/MainLayout.vue';
+import { route, ZiggyVue } from 'ziggy-js';
 
 createInertiaApp({
     resolve: (name) => {
@@ -34,6 +35,8 @@ createInertiaApp({
             render: () => h(App, props),
         })
             .use(plugin)
+            .use(ZiggyVue, Ziggy)
+            .use({ methods: { route } })
             .mount(el);
     },
 });

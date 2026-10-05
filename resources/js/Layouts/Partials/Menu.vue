@@ -29,46 +29,41 @@
             data-accordion="false"
             id="navigation"
             >
-            <!-- <li class="nav-item">
-                <a href="#" class="nav-link">
-                <i class="nav-icon bi bi-speedometer"></i>
-                <p>
-                    Dashboard
-                    <i class="nav-arrow bi bi-chevron-right"></i>
-                </p>
-                </a>
-                <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="./index.html" class="nav-link">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Dashboard v1</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="./index2.html" class="nav-link">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Dashboard v2</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="./index3.html" class="nav-link">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Dashboard v3</p>
-                    </a>
-                </li>
-                </ul>
-            </li> -->
+            <!--  -->
             <li class="nav-item">
-                <Link :href="route('home')" class="nav-link active">
+                <Link :href="route('home')" class="nav-link" :class="{ 'active' : $page.component == 'Home' }">
                 <i class="nav-icon bi bi-file-earmark"></i>
                 <p>Home</p>
                 </Link>
             </li>
             <li class="nav-item">
-                <Link :href="route('contact')" class="nav-link">
-                <i class="nav-icon bi bi-palette"></i>
-                <p>Contact</p>
+                <Link :href="route('localisation.index')" class="nav-link" :class="{ 'active' : $page.component == 'Localisation/Index' }">
+                <i class="nav-icon fas fa-th"></i>
+                <p>Localisation</p>
                 </Link>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link"  :class="{ 'active' : $page.component.startsWith('Animateur/') }">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                    Animateur
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                </p>
+                </a>
+                <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <Link :href="route('animateur.index')" class="nav-link" :class="{ 'active' : $page.component == 'Animateur/Index' }">
+                    <i class="nav-icon bi bi-circle"></i>
+                    <p>Tous</p>
+                    </Link>
+                </li>
+                <li class="nav-item">
+                    <Link :href="route('animateur.create')" class="nav-link" :class="{ 'active' : $page.component == 'Animateur/Create' }">
+                    <i class="nav-icon bi bi-circle"></i>
+                    <p>Nouveau</p>
+                    </Link>
+                </li>
+                </ul>
             </li>
             <!-- <li class="nav-item">
                 <a href="#" class="nav-link">

@@ -7,7 +7,7 @@
         <!--begin::Row-->
         <div class="row">
           <div class="col-sm-6">
-            <h1 class="mb-0 fs-3">Page de test 1</h1>
+            <h1 class="mb-0 fs-3">Formulaire de création d'une localisation</h1>
           </div>
         </div>
         <!--end::Row-->
