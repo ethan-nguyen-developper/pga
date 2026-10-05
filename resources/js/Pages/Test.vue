@@ -7,7 +7,7 @@
         <!--begin::Row-->
         <div class="row">
           <div class="col-sm-6">
-            <h1 class="mb-0 fs-3">Starter Page</h1>
+            <h1 class="mb-0 fs-3">Page de test 1</h1>
           </div>
         </div>
         <!--end::Row-->
@@ -22,18 +22,7 @@
         <!--begin::Row-->
         <div class="row">
           <div class="col-12">
-            <!--begin::Card-->
-            <div class="card">
-              <div class="card-header">
-                <h1>mon contenu</h1>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">Start creating your amazing application!</div>
-              <!-- /.card-body -->
-              <div class="card-footer">The footer of the card</div>
-              <!-- /.card-footer -->
-            </div>
-            <!--end::Card-->
+            <h1>Mon contenu 1</h1>
           </div>
           <!-- /.col -->
         </div>

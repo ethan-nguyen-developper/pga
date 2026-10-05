@@ -1,6 +1,8 @@
 import '../css/app.css';
 
 import 'bootstrap';
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 import 'admin-lte';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 

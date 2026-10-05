@@ -5,8 +5,8 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Test');
-});
+})->name("home");
 
-Route::get('/test2', function () {
-    return Inertia::render('Test');
-});
+Route::get('/contact', function () {
+    return Inertia::render('Test2');
+})->name("contact");
