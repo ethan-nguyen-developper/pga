@@ -7,7 +7,7 @@ import 'admin-lte';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/vue3';
+import { createInertiaApp, Link } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
 import MainLayout from './Layouts/MainLayout.vue';
@@ -36,6 +36,7 @@ createInertiaApp({
         })
             .use(plugin)
             .use(ZiggyVue, Ziggy)
+            .component("Link", Link)
             .use({ methods: { route } })
             .mount(el);
     },

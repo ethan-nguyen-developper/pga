@@ -9,7 +9,7 @@ use App\Models\Localisation;
 class LocalisationController extends Controller
 {
     public function index() {
-        $localisations = Localisation::orderBy("ville", "ASC")->get();
+        $localisations = Localisation::orderBy("ville", "ASC")->paginate(2);
         return Inertia::render('Localisation/Index', [
             "localisations" => $localisations
         ]);

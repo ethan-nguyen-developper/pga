@@ -26,13 +26,10 @@
               <div class="card">
                 <div class="card-header">
                   <div class="card-tools">
-                    <ul class="pagination pagination-sm float-right">
-                      <li class="page-item"><a class="page-link" href="#">«</a></li>
-                      <li class="page-item"><a class="page-link" href="#">1</a></li>
-                      <li class="page-item"><a class="page-link" href="#">2</a></li>
-                      <li class="page-item"><a class="page-link" href="#">3</a></li>
-                      <li class="page-item"><a class="page-link" href="#">»</a></li>
-                    </ul>
+                    <Pagination
+                      :links="props.localisations.links"
+                      :prev="props.localisations.prev_page_url"
+                      :next="props.localisations.next_page_url" />
                   </div>
                 </div>
                 <!-- /.card-header -->
@@ -45,7 +42,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="localisation in props.localisations">
+                      <tr v-for="localisation in props.localisations.data">
                         <td>{{localisation.ville}}</td>
                         <td>
                           <div class="d-flex justify-content-center">
@@ -73,7 +70,9 @@
 </template>
 
 <script setup>
- const props = defineProps({
-  localisations: Array
- })
+  import Pagination from '../../Shared/Pagination.vue';
+
+  const props = defineProps({
+    localisations: Object
+  })
 </script>
