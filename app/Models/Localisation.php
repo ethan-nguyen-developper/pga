@@ -9,7 +9,7 @@ class Localisation extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["nom"];
+    protected $fillable = ["ville"];
 
     public function animateurs() {
         return $this->hasMany(Animateur::class);

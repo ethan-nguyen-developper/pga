@@ -25,6 +25,9 @@
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header">
+                  <div class="card-title">
+                    <CreateLocalisation />
+                  </div>
                   <div class="card-tools">
                     <Pagination
                       :links="props.localisations.links"
@@ -71,6 +74,7 @@
 
 <script setup>
   import Pagination from '../../Shared/Pagination.vue';
+  import CreateLocalisation from './CreateLocalisation.vue';
 
   const props = defineProps({
     localisations: Object

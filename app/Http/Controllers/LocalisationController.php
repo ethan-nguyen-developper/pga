@@ -9,17 +9,17 @@ use App\Models\Localisation;
 class LocalisationController extends Controller
 {
     public function index() {
-        $localisations = Localisation::orderBy("ville", "ASC")->paginate(2);
-        return Inertia::render('Localisation/Index', [
+        $localisations = Localisation::latest()->paginate(5);
+        return Inertia::render('Localisation/IndexLocalisation', [
             "localisations" => $localisations
         ]);
     }
 
-    // public function create() {
-    //     return Inertia::render('Localisation/Create');
-    // }
+    public function store(Request $request) {
+        $request->validate(["ville" => "required"]);
 
-    // public function edit() {
-    //     return Inertia::render('Localisation/Edit');
-    // }
+        Localisation::create(["ville" => $request->ville]);
+
+        return redirect()->back();
+    }
 }
