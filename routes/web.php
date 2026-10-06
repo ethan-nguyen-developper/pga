@@ -13,4 +13,6 @@ Route::get('/animateur', [AnimateurController::class, "index"])->name("animateur
 Route::get('/animateur/create', [AnimateurController::class, "create"])->name("animateur.create");
 
 Route::get('/localisation', [LocalisationController::class, "index"])->name("localisation.index");
+Route::get('/localisation/edit/{localisation}', [LocalisationController::class, "edit"])->name("localisation.edit");
 Route::post('/localisation', [LocalisationController::class, "store"])->name("localisation.store");
+Route::put('/localisations/{localisation}', [LocalisationController::class, 'update'])->name('localisation.update');

@@ -1,35 +1,33 @@
 <template>
-  <MainLayout>
-    <!--begin::App Content Header-->
-    <div class="app-content-header">
-      <!--begin::Container-->
-      <div class="container-fluid">
-        <!--begin::Row-->
-        <div class="row">
-          <div class="col-sm-6">
-            <h1 class="mb-0 fs-3">Liste des animateurs</h1>
-          </div>
+  <!--begin::App Content Header-->
+  <div class="app-content-header">
+    <!--begin::Container-->
+    <div class="container-fluid">
+      <!--begin::Row-->
+      <div class="row">
+        <div class="col-sm-6">
+          <h1 class="mb-0 fs-3">Liste des animateurs</h1>
         </div>
-        <!--end::Row-->
       </div>
-      <!--end::Container-->
+      <!--end::Row-->
     </div>
-    <!--end::App Content Header-->
-    <!--begin::App Content-->
-    <div class="app-content">
-      <!--begin::Container-->
-      <div class="container-fluid">
-        <!--begin::Row-->
-        <div class="row">
-          <div class="col-12">
-            <h1>Mon contenu 1</h1>
-          </div>
-          <!-- /.col -->
+    <!--end::Container-->
+  </div>
+  <!--end::App Content Header-->
+  <!--begin::App Content-->
+  <div class="app-content">
+    <!--begin::Container-->
+    <div class="container-fluid">
+      <!--begin::Row-->
+      <div class="row">
+        <div class="col-12">
+          <h1>Mon contenu 1</h1>
         </div>
-        <!--end::Row-->
+        <!-- /.col -->
       </div>
-      <!--end::Container-->
+      <!--end::Row-->
     </div>
-    <!--end::App Content-->
-  </MainLayout>
+    <!--end::Container-->
+  </div>
+  <!--end::App Content-->
 </template>

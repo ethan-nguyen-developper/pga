@@ -37,7 +37,7 @@
                         class="btn-close"
                         data-bs-dismiss="modal"
                         aria-label="Fermer"
-                        @click="resetForm"
+                        @click="fermerEtReset"
                     ></button>
                 </div>
 
@@ -72,7 +72,7 @@
                         type="button"
                         class="btn btn-danger"
                         data-bs-dismiss="modal"
-                        @click="resetForm"
+                        @click="fermerEtReset"
                     >
                         Fermer
                     </button>
@@ -98,11 +98,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { router } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
 import { Modal } from 'bootstrap'
-import { useSwalSuccess, useSwalError } from '../../Composables/alert'
+import {
+    useSwalSuccess,
+    useSwalError
+} from '../../Composables/alert'
 
 const villeLocalisation = ref('')
 const processing = ref(false)
@@ -112,6 +115,34 @@ const resetForm = () => {
     villeLocalisation.value = ''
     villeError.value = ''
 }
+
+const fermerEtReset = (event) => {
+    event.currentTarget.blur()
+    resetForm()
+}
+
+const handleModalHidden = () => {
+    document.activeElement?.blur()
+    resetForm()
+}
+
+onMounted(() => {
+    const modalElement = document.getElementById('createNVModal')
+
+    modalElement?.addEventListener(
+        'hidden.bs.modal',
+        handleModalHidden
+    )
+})
+
+onBeforeUnmount(() => {
+    const modalElement = document.getElementById('createNVModal')
+
+    modalElement?.removeEventListener(
+        'hidden.bs.modal',
+        handleModalHidden
+    )
+})
 
 const fermerModal = () => {
     const modalElement = document.getElementById('createNVModal')
@@ -142,8 +173,6 @@ const soumettre = () => {
             preserveScroll: true,
 
             onSuccess: () => {
-                processing.value = false
-
                 resetForm()
                 fermerModal()
 
@@ -153,8 +182,6 @@ const soumettre = () => {
             },
 
             onError: (errors) => {
-                processing.value = false
-
                 if (errors.ville) {
                     villeError.value = errors.ville
                 }

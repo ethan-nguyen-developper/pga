@@ -1,33 +1,32 @@
-import '../css/app.css';
+import '../css/app.css'
 
-import 'bootstrap';
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
-import 'admin-lte';
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'admin-lte'
+import '@fortawesome/fontawesome-free/css/all.min.css'
 
-import { createApp, h } from 'vue';
-import { createInertiaApp, Link } from '@inertiajs/vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import { createApp, h } from 'vue'
+import { createInertiaApp } from '@inertiajs/vue3'
+import { ZiggyVue } from 'ziggy-js'
 
-import MainLayout from './Layouts/MainLayout.vue';
-import { route, ZiggyVue } from 'ziggy-js';
+import MainLayout from './Layouts/MainLayout.vue'
 
 createInertiaApp({
     resolve: (name) => {
         const pages = import.meta.glob('./Pages/**/*.vue', {
             eager: true,
-        });
+        })
 
-        const page = pages[`./Pages/${name}.vue`];
+        const page = pages[`./Pages/${name}.vue`]
 
         if (!page) {
-            throw new Error(`Page Inertia introuvable : ${name}`);
+            throw new Error(`Page Inertia introuvable : ${name}`)
         }
 
-        page.default.layout ??= MainLayout;
+        page.default.layout ??= MainLayout
 
-        return page;
+        return page
     },
 
     setup({ el, App, props, plugin }) {
@@ -35,9 +34,7 @@ createInertiaApp({
             render: () => h(App, props),
         })
             .use(plugin)
-            .use(ZiggyVue, Ziggy)
-            .component("Link", Link)
-            .use({ methods: { route } })
-            .mount(el);
+            .use(ZiggyVue)
+            .mount(el)
     },
-});
+})
