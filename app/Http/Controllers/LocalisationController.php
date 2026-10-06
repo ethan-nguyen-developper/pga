@@ -16,7 +16,9 @@ class LocalisationController extends Controller
     }
 
     public function store(Request $request) {
-        $request->validate(["ville" => "required"]);
+        $request->validate([
+            "ville" => "required|unique:App\\Models\Localisation"
+        ]);
 
         Localisation::create(["ville" => $request->ville]);
 

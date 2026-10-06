@@ -56,10 +56,12 @@
                                 id="ville"
                                 type="text"
                                 class="form-control"
+                                :class="{'is-invalid': villeError != ''}"
                                 v-model="villeLocalisation"
                                 required
                                 autofocus
                             >
+                            <span v-if="villeError != ''" class="invalid-feedback error">{{ villeError }}</span>
                         </div>
                     </form>
                 </div>
@@ -100,15 +102,15 @@ import { ref } from 'vue'
 import { router } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
 import { Modal } from 'bootstrap'
-import Swal from 'sweetalert2'
-import 'sweetalert2/dist/sweetalert2.min.css'
 import { useSwalSuccess, useSwalError } from '../../Composables/alert'
 
 const villeLocalisation = ref('')
 const processing = ref(false)
+const villeError = ref('')
 
 const resetForm = () => {
     villeLocalisation.value = ''
+    villeError.value = ''
 }
 
 const fermerModal = () => {
@@ -129,6 +131,7 @@ const soumettre = () => {
     }
 
     processing.value = true
+    villeError.value = ''
 
     router.post(
         route('localisation.store'),
@@ -144,15 +147,21 @@ const soumettre = () => {
                 resetForm()
                 fermerModal()
 
-                useSwalSuccess('Localisation ajoutée avec succès!')
+                useSwalSuccess(
+                    'Localisation ajoutée avec succès !'
+                )
             },
 
             onError: (errors) => {
                 processing.value = false
 
-                console.log('Erreurs Laravel :', errors)
+                if (errors.ville) {
+                    villeError.value = errors.ville
+                }
 
-                useSwalError("Une erreur s'est produite")
+                useSwalError(
+                    "Une erreur s'est produite"
+                )
             },
 
             onFinish: () => {
