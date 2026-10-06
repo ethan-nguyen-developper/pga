@@ -4,11 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Localisation;
 
 class LocalisationController extends Controller
 {
     public function index() {
-        return Inertia::render('Localisation/Index');
+        $localisations = Localisation::orderBy("ville", "ASC")->get();
+        return Inertia::render('Localisation/Index', [
+            "localisations" => $localisations
+        ]);
     }
 
     // public function create() {
