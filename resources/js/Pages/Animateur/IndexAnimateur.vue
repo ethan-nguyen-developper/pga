@@ -27,13 +27,25 @@
                 <div class="card-title">
                   <button
                       type="button"
-                      class="btn btn-primary"
+                      class="btn btn-primary mb-4"
                       data-bs-toggle="modal"
                       data-bs-target="#createNVModal"
                   >
                       <i class="fa fa-plus"></i>
                       Nouveau
                   </button>
+
+                  <select
+                      v-model="per_page"
+                      @change="search"
+                      class="form-control"
+                  >
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="20">20</option>
+                      <option value="50">50</option>
+                      <option value="100">100</option>
+                  </select>
                   <!-- <CreateAnimateur /> -->
                 </div>
                 <div class="card-tools">
@@ -48,8 +60,19 @@
                 <table class="table">
                   <thead>
                     <tr>
-                      <th>Animateurs</th>
-                      <th>Localisation</th>
+                      <th>
+                        <p>Animateurs</p>
+                        <input @keyup="search" v-model="searchAnimateur" type="text" class="form-control">
+                      </th>
+                      <th>
+                        <p>Localisation</p>
+                        <select @change="search" v-model="filterLocalisation" name="" id="" class="form-control">
+                          <option value=""></option>
+                          <option :value="localisation.id" :key="localisation.id" v-for="localisation in props.localisations">
+                            {{ localisation.ville }}
+                          </option>
+                        </select>
+                      </th>
                       <th style="width: 40px">Action</th>
                     </tr>
                   </thead>
@@ -99,63 +122,40 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
+import { router } from '@inertiajs/vue3'
+import { route } from 'ziggy-js'
 import Pagination from '../../Shared/Pagination.vue'
-// import CreateAnimateur from './CreateAnimateur.vue'
-// import EditAnimateur from './EditAnimateur.vue'
-
-// import { router } from '@inertiajs/vue3'
-// import { route } from 'ziggy-js'
-
-// import {
-//     useSwalConfirm,
-//     useSwalError,
-//     useSwalSuccess
-// } from '../../Composables/alert.js'
-
-// import { ref } from 'vue'
 
 const props = defineProps({
-    animateurs: Object
+    animateurs: Object,
+    localisations: Array,
+    filtres: Object
 })
 
-// const editingAnimateur = ref(null)
-// const showModal = ref(false)
+const searchAnimateur = ref(props.filtres.search ?? '')
+const filterLocalisation = ref(props.filtres.filter ?? '')
+const per_page = ref(String(props.filtres.per_page ?? 5))
 
-// const openEditModal = (animateur) => {
-//     editingAnimateur.value = animateur
-//     showModal.value = true
-// }
+let timeout = null
 
-// const deleteAnimateur = (id) => {
-//     router.delete(
-//         route('animateur.delete', {
-//             animateur: id
-//         }),
-//         {
-//             preserveScroll: true,
+const search = () => {
+    clearTimeout(timeout)
 
-//             onSuccess: () => {
-//                 useSwalSuccess(
-//                     'Animateur supprimée avec succès !'
-//                 )
-//             },
-
-//             onError: (errors) => {
-//                 useSwalError(
-//                     errors.message ??
-//                     'Impossible de supprimer cette animateur.'
-//                 )
-//             }
-//         }
-//     )
-// }
-
-// const deleteConfirmation = (animateur) => {
-//     const message =
-//         `Vous êtes sur le point de supprimer "${animateur.nom}". Voulez-vous continuer ?`
-
-//     useSwalConfirm(message, () => {
-//         deleteLocalisation(animateur.id)
-//     })
-// }
+    timeout = setTimeout(() => {
+        router.get(
+            route('animateur.index'),
+            {
+                search: searchAnimateur.value,
+                filter: filterLocalisation.value,
+                per_page: per_page.value
+            },
+            {
+                replace: true,
+                preserveState: true,
+                preserveScroll: true
+            }
+        )
+    }, 500)
+}
 </script>
