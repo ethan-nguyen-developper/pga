@@ -70,4 +70,21 @@ class LocalisationController extends Controller
                 ]);
         }
     }
+
+    public function delete(Localisation $localisation)
+    {
+        if ($localisation->animateurs()->exists()) {
+            return redirect()
+                ->back()
+                ->withErrors([
+                    'message' => 'Cette localisation ne peut pas être supprimée car des animateurs en dépendent.'
+                ]);
+        }
+
+        $localisation->delete();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Localisation supprimée avec succès !');
+    }
 }

@@ -51,7 +51,7 @@
                           <button @click="openEditModal(localisation)" class="btn btn-info me-2">
                             <i class="fas fa-pencil"></i>
                           </button>
-                          <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                          <button @click="deleteConfirmation(localisation)" class="btn btn-danger"><i class="fas fa-trash"></i></button>
                         </div>
                       </td>
                     </tr>
@@ -79,21 +79,63 @@
 </template>
 
 <script setup>
-  import Pagination from '../../Shared/Pagination.vue';
-  import CreateLocalisation from './CreateLocalisation.vue';
-  import EditLocalisation from './EditLocalisation.vue';
+import Pagination from '../../Shared/Pagination.vue'
+import CreateLocalisation from './CreateLocalisation.vue'
+import EditLocalisation from './EditLocalisation.vue'
 
-  import { ref } from 'vue';
+import { router } from '@inertiajs/vue3'
+import { route } from 'ziggy-js'
 
-  const props = defineProps({
+import {
+    useSwalConfirm,
+    useSwalError,
+    useSwalSuccess
+} from '../../Composables/alert.js'
+
+import { ref } from 'vue'
+
+const props = defineProps({
     localisations: Object
-  })
+})
 
-  const editingLocalisation = ref(null)
-  const showModal = ref(false)
+const editingLocalisation = ref(null)
+const showModal = ref(false)
 
-  const openEditModal = (localisation) => {
-      editingLocalisation.value = localisation
-      showModal.value = true
-  }
+const openEditModal = (localisation) => {
+    editingLocalisation.value = localisation
+    showModal.value = true
+}
+
+const deleteLocalisation = (id) => {
+    router.delete(
+        route('localisation.delete', {
+            localisation: id
+        }),
+        {
+            preserveScroll: true,
+
+            onSuccess: () => {
+                useSwalSuccess(
+                    'Localisation supprimée avec succès !'
+                )
+            },
+
+            onError: (errors) => {
+                useSwalError(
+                    errors.message ??
+                    'Impossible de supprimer cette localisation.'
+                )
+            }
+        }
+    )
+}
+
+const deleteConfirmation = (localisation) => {
+    const message =
+        `Vous êtes sur le point de supprimer "${localisation.ville}". Voulez-vous continuer ?`
+
+    useSwalConfirm(message, () => {
+        deleteLocalisation(localisation.id)
+    })
+}
 </script>

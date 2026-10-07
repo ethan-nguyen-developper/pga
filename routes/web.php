@@ -16,3 +16,4 @@ Route::get('/localisation', [LocalisationController::class, "index"])->name("loc
 Route::get('/localisation/edit/{localisation}', [LocalisationController::class, "edit"])->name("localisation.edit");
 Route::post('/localisation', [LocalisationController::class, "store"])->name("localisation.store");
 Route::put('/localisations/{localisation}', [LocalisationController::class, 'update'])->name('localisation.update');
+Route::delete('/localisations/{localisation}', [LocalisationController::class, 'delete'])->name('localisation.delete');
