@@ -10,6 +10,7 @@ Route::get('/', function () {
 })->name("home");
 
 Route::get('/animateur', [AnimateurController::class, "index"])->name("animateur.index");
+Route::post('/animateur', [AnimateurController::class, "store"])->name("animateur.store");
 Route::get('/animateur/create', [AnimateurController::class, "create"])->name("animateur.create");
 
 Route::get('/localisation', [LocalisationController::class, "index"])->name("localisation.index");

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Animateur;
 use App\Models\Localisation;
+use Illuminate\Support\Facades\DB;
 
 class AnimateurController extends Controller
 {
@@ -48,7 +49,59 @@ class AnimateurController extends Controller
     }
 
     public function create() {
-        return Inertia::render('Animateur/CreateAnimateur');
+        $localisations = Localisation::all();
+
+        return Inertia::render('Animateur/CreateAnimateur', [
+            'localisations' => $localisations,
+        ]);
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'sexe' => 'required|in:M,F',
+            'age' => 'required|integer',
+            'localisation_id' => 'required|exists:localisations,id',
+            'photo' => 'nullable|image|max:2048',
+        ]);
+
+        try {
+            DB::beginTransaction();
+
+            $animateur = Animateur::create($validatedData);
+
+            if ($request->hasFile('photo')) {
+                $photo = $request->file('photo');
+
+                $fileName = $photo->getClientOriginalName();
+
+                $filePath = $photo->storeAs(
+                    'photos',
+                    $fileName,
+                    'public'
+                );
+
+                $animateur->photo = $filePath;
+                $animateur->save();
+            }
+
+            DB::commit();
+
+            return redirect()
+                ->back()
+                ->with('success', 'Animateur ajouté avec succès !');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()
+                ->back()
+                ->withErrors([
+                    'message' => 'Une erreur est survenue lors de la création de l’animateur.'
+                ]);
+        }
     }
 
     public function edit() {
