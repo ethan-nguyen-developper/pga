@@ -183,4 +183,17 @@ class AnimateurController extends Controller
                 ]);
         }
     }
+
+    public function destroy(Animateur $animateur)
+{
+    if ($animateur->photo) {
+        Storage::disk('public')->delete($animateur->photo);
+    }
+
+    $animateur->delete();
+
+    return redirect()
+        ->back()
+        ->with('success', 'Animateur supprimé avec succès !');
+}
 }

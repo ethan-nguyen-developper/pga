@@ -24,6 +24,9 @@ Route::get('/animateur/{animateur}/edit', [AnimateurController::class, 'edit'])
 Route::put('/animateur/{animateur}', [AnimateurController::class, 'update'])
     ->name('animateur.update');
 
+Route::delete('/animateur/{animateur}', [AnimateurController::class, 'destroy'])
+    ->name('animateur.destroy');
+
 Route::get('/localisation', [LocalisationController::class, "index"])->name("localisation.index");
 Route::get('/localisation/edit/{localisation}', [LocalisationController::class, "edit"])->name("localisation.edit");
 Route::post('/localisation', [LocalisationController::class, "store"])->name("localisation.store");

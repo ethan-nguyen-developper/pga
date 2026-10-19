@@ -104,7 +104,11 @@
                                     <i class="fas fa-pencil"></i>
                                 </Link>
 
-                                <button class="btn btn-danger">
+                                <button
+                                    type="button"
+                                    class="btn btn-danger"
+                                    @click="deleteConfirmation(animateur)"
+                                >
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
@@ -138,6 +142,12 @@ import { ref } from 'vue'
 import { router, Link } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
 import Pagination from '../../Shared/Pagination.vue'
+
+import {
+    useSwalConfirm,
+    useSwalError,
+    useSwalSuccess
+} from '../../Composables/alert.js'
 
 const props = defineProps({
     animateurs: Object,
@@ -179,5 +189,38 @@ const search = () => {
             }
         )
     }, 500)
+}
+
+const deleteAnimateur = (id) => {
+    router.delete(
+        route('animateur.destroy', {
+            animateur: id
+        }),
+        {
+            preserveScroll: true,
+
+            onSuccess: () => {
+                useSwalSuccess(
+                    'Animateur supprimé avec succès !'
+                )
+            },
+
+            onError: (errors) => {
+                useSwalError(
+                    errors.message ??
+                    'Impossible de supprimer cet animateur.'
+                )
+            }
+        }
+    )
+}
+
+const deleteConfirmation = (animateur) => {
+    const message =
+        `Vous êtes sur le point de supprimer l'animateur "${animateur.nom}". Voulez-vous continuer ?`
+
+    useSwalConfirm(message, () => {
+        deleteAnimateur(animateur.id)
+    })
 }
 </script>
