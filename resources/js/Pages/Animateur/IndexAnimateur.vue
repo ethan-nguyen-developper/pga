@@ -25,15 +25,13 @@
             <div class="card">
               <div class="card-header">
                 <div class="card-title">
-                  <button
-                      type="button"
+                  <Link
+                      :href="route('animateur.create')"
                       class="btn btn-primary mb-4"
-                      data-bs-toggle="modal"
-                      data-bs-target="#createNVModal"
                   >
                       <i class="fa fa-plus"></i>
                       Nouveau
-                  </button>
+                  </Link>
 
                   <select
                       v-model="per_page"
@@ -61,6 +59,9 @@
                   <thead>
                     <tr>
                       <th>
+                        Photo
+                      </th>
+                      <th>
                         <p>Animateurs</p>
                         <input @keyup="search" v-model="searchAnimateur" type="text" class="form-control">
                       </th>
@@ -79,6 +80,14 @@
                   <tbody>
                     <tr v-for="animateur in props.animateurs.data" :key="animateur.id">
                         <td>
+                          <img
+                              :src="showPic(animateur)"
+                              alt="Photo de l'animateur"
+                              style="width: 45px; height: 45px; border-radius: 25px;"
+                          >
+                        </td>
+
+                        <td>
                             {{ animateur.nom }} {{ animateur.prenom }}
                         </td>
 
@@ -88,9 +97,12 @@
 
                         <td>
                             <div class="d-flex justify-content-center">
-                                <button class="btn btn-info me-2">
+                                <Link
+                                    :href="route('animateur.edit', { animateur: animateur.id })"
+                                    class="btn btn-info me-2"
+                                >
                                     <i class="fas fa-pencil"></i>
-                                </button>
+                                </Link>
 
                                 <button class="btn btn-danger">
                                     <i class="fas fa-trash"></i>
@@ -123,7 +135,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import { router } from '@inertiajs/vue3'
+import { router, Link } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
 import Pagination from '../../Shared/Pagination.vue'
 
@@ -132,6 +144,16 @@ const props = defineProps({
     localisations: Array,
     filtres: Object
 })
+
+const showPic = (animateur) => {
+    if (animateur.photo) {
+        return '/storage/' + animateur.photo
+    }
+
+    return animateur.sexe === 'M'
+        ? '/images/man.jpg'
+        : '/images/woman.jpg'
+}
 
 const searchAnimateur = ref(props.filtres.search ?? '')
 const filterLocalisation = ref(props.filtres.filter ?? '')

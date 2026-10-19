@@ -9,9 +9,20 @@ Route::get('/', function () {
     return Inertia::render('Home');
 })->name("home");
 
-Route::get('/animateur', [AnimateurController::class, "index"])->name("animateur.index");
-Route::post('/animateur', [AnimateurController::class, "store"])->name("animateur.store");
-Route::get('/animateur/create', [AnimateurController::class, "create"])->name("animateur.create");
+Route::get('/animateur', [AnimateurController::class, 'index'])
+    ->name('animateur.index');
+
+Route::get('/animateur/create', [AnimateurController::class, 'create'])
+    ->name('animateur.create');
+
+Route::post('/animateur', [AnimateurController::class, 'store'])
+    ->name('animateur.store');
+
+Route::get('/animateur/{animateur}/edit', [AnimateurController::class, 'edit'])
+    ->name('animateur.edit');
+
+Route::put('/animateur/{animateur}', [AnimateurController::class, 'update'])
+    ->name('animateur.update');
 
 Route::get('/localisation', [LocalisationController::class, "index"])->name("localisation.index");
 Route::get('/localisation/edit/{localisation}', [LocalisationController::class, "edit"])->name("localisation.edit");
