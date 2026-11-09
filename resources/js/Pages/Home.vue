@@ -22,6 +22,7 @@
       <div class="row">
         <div class="col-12">
           <h1>Accueil</h1>
+          <p>Bonjour, {{ user.name }}</p>
         </div>
         <!-- /.col -->
       </div>
@@ -31,3 +32,13 @@
   </div>
   <!--end::App Content-->
 </template>
+
+
+<script setup>
+import { computed } from 'vue'
+import { usePage } from '@inertiajs/vue3'
+
+const page = usePage()
+
+const user = computed(() => page.props.auth?.user)
+</script>

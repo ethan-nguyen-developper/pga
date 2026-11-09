@@ -19,5 +19,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LocalisationSeeder::class);
 
         Animateur::factory(10)->create();
+        User::factory(10)->create();
     }
 }

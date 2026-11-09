@@ -14,6 +14,7 @@
             <!--end::Brand Image-->
             <!--begin::Brand Text-->
             <span class="brand-text fw-light">AdminLTE 4</span>
+            {{ user.name }}
             <!--end::Brand Text-->
         </a>
         <!--end::Brand Link-->
@@ -642,4 +643,11 @@
 <script setup>
 import { Link } from '@inertiajs/vue3'
 import { route } from 'ziggy-js'
+
+import { usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
+const user = computed(() => {
+    return usePage().props.auth.user
+})
 </script>

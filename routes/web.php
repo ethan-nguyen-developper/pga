@@ -4,31 +4,46 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\AnimateurController;
 use App\Http\Controllers\LocalisationController;
+use App\Http\Controllers\AuthController;
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-})->name("home");
+Route::get("/login", [AuthController::class, "showLogin"])
+->middleware("guest")
+->name("login");
 
-Route::get('/animateur', [AnimateurController::class, 'index'])
-    ->name('animateur.index');
+Route::post("/login", [AuthController::class, "authenticate"])
+->middleware("guest")
+->name("login.post");
 
-Route::get('/animateur/create', [AnimateurController::class, 'create'])
-    ->name('animateur.create');
+Route::group([
+    "middleware" => "auth"
+], function() {
+    Route::get('/', function () {
+        return Inertia::render('Home');
+    })->name("home");
 
-Route::post('/animateur', [AnimateurController::class, 'store'])
-    ->name('animateur.store');
+    Route::post("/logout", [AuthController::class, "logout"])->name("logout");
 
-Route::get('/animateur/{animateur}/edit', [AnimateurController::class, 'edit'])
-    ->name('animateur.edit');
+    Route::get('/animateur', [AnimateurController::class, 'index'])
+        ->name('animateur.index');
 
-Route::put('/animateur/{animateur}', [AnimateurController::class, 'update'])
-    ->name('animateur.update');
+    Route::get('/animateur/create', [AnimateurController::class, 'create'])
+        ->name('animateur.create');
 
-Route::delete('/animateur/{animateur}', [AnimateurController::class, 'destroy'])
-    ->name('animateur.destroy');
+    Route::post('/animateur', [AnimateurController::class, 'store'])
+        ->name('animateur.store');
 
-Route::get('/localisation', [LocalisationController::class, "index"])->name("localisation.index");
-Route::get('/localisation/edit/{localisation}', [LocalisationController::class, "edit"])->name("localisation.edit");
-Route::post('/localisation', [LocalisationController::class, "store"])->name("localisation.store");
-Route::put('/localisations/{localisation}', [LocalisationController::class, 'update'])->name('localisation.update');
-Route::delete('/localisations/{localisation}', [LocalisationController::class, 'delete'])->name('localisation.delete');
+    Route::get('/animateur/{animateur}/edit', [AnimateurController::class, 'edit'])
+        ->name('animateur.edit');
+
+    Route::put('/animateur/{animateur}', [AnimateurController::class, 'update'])
+        ->name('animateur.update');
+
+    Route::delete('/animateur/{animateur}', [AnimateurController::class, 'destroy'])
+        ->name('animateur.destroy');
+
+    Route::get('/localisation', [LocalisationController::class, "index"])->name("localisation.index");
+    Route::get('/localisation/edit/{localisation}', [LocalisationController::class, "edit"])->name("localisation.edit");
+    Route::post('/localisation', [LocalisationController::class, "store"])->name("localisation.store");
+    Route::put('/localisations/{localisation}', [LocalisationController::class, 'update'])->name('localisation.update');
+    Route::delete('/localisations/{localisation}', [LocalisationController::class, 'delete'])->name('localisation.delete');
+});
